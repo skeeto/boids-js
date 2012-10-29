@@ -1,9 +1,8 @@
 /* Boid prototype */
 
-function Boid() {
-    var canvas = $('#canvas').get(0);
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
+function Boid(ctx) {
+    this.x = Math.random() * ctx.canvas.width;
+    this.y = Math.random() * ctx.canvas.height;
     this.heading = Math.random() * 2 * Math.PI - Math.PI;
     this.radius = 8;
     this.speed = 2;
@@ -23,8 +22,8 @@ Boid.prototype.draw = function(ctx) {
 };
 
 Boid.prototype.distance = function(boid) {
-    return Math.sqrt(Math.pow(this.x - boid.x, 2) +
-                     Math.pow(this.y - boid.y, 2));
+    return Math.sqrt((this.x - boid.x) * (this.x - boid.x) +
+                     (this.y - boid.y) * (this.y - boid.y));
 };
 
 Boid.prototype.getNeighbors = function(swarm) {
@@ -50,18 +49,18 @@ Boid.prototype.step = function(swarm) {
         var meanhx = 0, meanhy = 0;
         var meanx = 0, meany = 0;
         var mindist = this.radius * 2, min = null;
-        var me = this;
-        neighbors.forEach(function(boid) {
+        for (var i = 0; i < neighbors.length; i++) {
+            var boid = neighbors[i];
             meanhx += Math.cos(boid.heading);
             meanhy += Math.sin(boid.heading);
             meanx += boid.x;
             meany += boid.y;
-            var dist = me.distance(boid);
+            var dist = this.distance(boid);
             if (dist < mindist) {
                 mindist = dist;
                 min = boid;
             }
-        });
+        }
         meanhx /= neighbors.length;
         meanhy /= neighbors.length;
         meanx /= neighbors.length;
@@ -115,7 +114,7 @@ function Swarm(ctx) {
 
 Swarm.prototype.createBoid = function(n) {
     for (var i = 0; i < (n || 1); i++) {
-        this.boids.push(new Boid());
+        this.boids.push(new Boid(this.ctx));
     }
 };
 
@@ -128,17 +127,19 @@ Swarm.step = function (swarm) {
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-    swarm.boids.forEach(function (boid) {
-        boid.step(swarm);
-        boid.draw(ctx);
-    });
-
+    for (var i = 0; i < swarm.boids.length; i++) {
+        swarm.boids[i].step(swarm);
+        swarm.boids[i].draw(ctx);
+    }
     setTimeout(swarm.animate, 33);
 };
 
 /* Test */
 
-var swarm = new Swarm($('#canvas').get(0).getContext("2d"));
-swarm.animate();
-swarm.clear();
-swarm.createBoid(100);
+var swarm; // defined globally for skewer
+$("document").ready(function() {
+    swarm = new Swarm($('#canvas').get(0).getContext("2d"));
+    swarm.animate();
+    swarm.clear();
+    swarm.createBoid(100);
+});
