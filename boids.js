@@ -11,14 +11,19 @@ function Boid(ctx) {
 }
 
 Boid.prototype.draw = function(ctx) {
-    var pointLen = this.radius * 1.5;
-    ctx.strokeStyle = "black";
+    var pointLen = this.radius * 1.75;
+    ctx.fillStyle = "blue";
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
-    ctx.moveTo(this.x, this.y);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(this.x + Math.cos(this.heading + Math.PI / 2) * this.radius,
+               this.y + Math.sin(this.heading + Math.PI / 2) * this.radius);
     ctx.lineTo(this.x + Math.cos(this.heading) * pointLen,
                this.y + Math.sin(this.heading) * pointLen);
-    ctx.stroke();
+    ctx.lineTo(this.x + Math.cos(this.heading - Math.PI / 2) * this.radius,
+               this.y + Math.sin(this.heading - Math.PI / 2) * this.radius);
+    ctx.fill();
 };
 
 Boid.prototype.distance = function(boid) {
