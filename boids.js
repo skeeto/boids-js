@@ -111,12 +111,16 @@ Boid.prototype.step = function(swarm) {
         this.heading = Boid.wrap(this.heading + delta, -Math.PI, Math.PI);
     }
 
-    this.move(swarm.ctx.canvas.width, swarm.ctx.canvas.height);
+    this.move(swarm);
 };
 
-Boid.prototype.move = function(width, height) {
-    this.x = Boid.wrap(this.x + Math.cos(this.heading) * this.speed, width);
-    this.y = Boid.wrap(this.y + Math.sin(this.heading) * this.speed, height);
+Boid.prototype.move = function(swarm) {
+    var padding = swarm.padding;
+    var width = swarm.ctx.canvas.width, height = swarm.ctx.canvas.height;
+    this.x = Boid.wrap(this.x + Math.cos(this.heading) * this.speed,
+                       -padding, width + padding * 2);
+    this.y = Boid.wrap(this.y + Math.sin(this.heading) * this.speed,
+                       -padding, height + padding * 2);
 };
 
 /* Swam prototype. */
@@ -128,6 +132,7 @@ function Swarm(ctx) {
     this.animate = function() {
         Swarm.step(swarm);
     };
+    this.padding = 8;
 }
 
 Swarm.prototype.createBoid = function(n) {
