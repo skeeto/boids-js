@@ -4,7 +4,7 @@ function Boid(ctx) {
     this.x = Math.random() * ctx.canvas.width;
     this.y = Math.random() * ctx.canvas.height;
     this.heading = Math.random() * 2 * Math.PI - Math.PI;
-    this.radius = 8;
+    this.radius = 6;
     this.speed = 2;
     this.radialSpeed = Math.PI / 60;
     this.vision = 50;
