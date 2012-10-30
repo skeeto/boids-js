@@ -37,10 +37,33 @@ Boid.prototype.getNeighbors = function(swarm) {
     return neighbors;
 };
 
-Boid.wrap = function(value, wrap) {
-    while (value >= wrap) value -= wrap;
-    while (value < 0) value += wrap;
+Boid.wrap = function(value) {
+    var min, max;
+    if (arguments.length === 2) {
+        min = 0;
+        max = arguments[1];
+    } else if (arguments.length === 3) {
+        min = arguments[1];
+        max = arguments[2];
+    } else {
+        throw new Error("wrong number of arguments");
+    }
+    while (value >= max) value -= (max - min);
+    while (value < min) value += (max - min);
     return value;
+};
+
+Boid.trim = function(value, limit) {
+    return Math.min(limit, Math.max(-limit, value));
+};
+
+Boid.meanAngle = function() {
+    var sumx = 0, sumy = 0, len = arguments.length;
+    for (var i = 0; i < len; i++) {
+        sumx += Math.cos(arguments[i]);
+        sumy += Math.sin(arguments[i]);
+    }
+    return Math.atan2(sumy / len, sumx / len);
 };
 
 Boid.prototype.step = function(swarm) {
@@ -70,35 +93,25 @@ Boid.prototype.step = function(swarm) {
         if (min) {
             // Keep away!
             target = Math.atan2(this.y - min.y, this.x - min.x);
-            target = Boid.wrap(target, 2 * Math.PI);
         } else {
             // Match heading and move towards center
             var meanh = Math.atan2(meanhy, meanhx);
-            var center = Math.atan2(meany, meanx);
-            var tx = (Math.cos(meanh) * 3 + Math.cos(center)) / 4;
-            var ty = (Math.sin(meanh) * 3 + Math.sin(center)) / 4;
-            target = Math.atan2(ty, tx);
+            var center = Math.atan2(meany - this.y, meanx - this.x);
+            target = Boid.meanAngle(meanh, meanh, meanh, center);
         }
 
         // Move in this direction
-        var headingDelta = target - this.heading;
-        if (headingDelta > this.radialSpeed)
-            headingDelta = this.radialSpeed;
-        else if (headingDelta < -this.radialSpeed) {
-            headingDelta = -this.radialSpeed;
-        }
-        this.heading = Boid.wrap(this.heading + headingDelta,
-                                 2 * Math.PI);
+        var delta = Boid.wrap(target - this.heading, -Math.PI, Math.PI);
+        delta = Boid.trim(delta, this.radialSpeed);
+        this.heading = Boid.wrap(this.heading + delta, -Math.PI, Math.PI);
     }
 
     this.move(swarm.ctx.canvas.width, swarm.ctx.canvas.height);
 };
 
 Boid.prototype.move = function(width, height) {
-    this.x += Math.cos(this.heading) * this.speed;
-    this.x = (this.x + width) % width;
-    this.y += Math.sin(this.heading) * this.speed;
-    this.y = (this.y + height) % height;
+    this.x = Boid.wrap(this.x + Math.cos(this.heading) * this.speed, width);
+    this.y = Boid.wrap(this.y + Math.sin(this.heading) * this.speed, height);
 };
 
 /* Swam prototype. */
@@ -141,5 +154,5 @@ $("document").ready(function() {
     swarm = new Swarm($('#canvas').get(0).getContext("2d"));
     swarm.animate();
     swarm.clear();
-    swarm.createBoid(100);
+    swarm.createBoid(200);
 });
