@@ -11,7 +11,7 @@ function Boid(ctx) {
 }
 
 Boid.prototype.draw = function(ctx) {
-    var pointLen = this.radius * 1.75;
+    var pointLen = this.radius * 2.5;
     ctx.fillStyle = "blue";
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -19,8 +19,8 @@ Boid.prototype.draw = function(ctx) {
     ctx.beginPath();
     ctx.moveTo(this.x + Math.cos(this.heading + Math.PI / 2) * this.radius,
                this.y + Math.sin(this.heading + Math.PI / 2) * this.radius);
-    ctx.lineTo(this.x + Math.cos(this.heading) * pointLen,
-               this.y + Math.sin(this.heading) * pointLen);
+    ctx.lineTo(this.x + Math.cos(this.heading + Math.PI) * pointLen,
+               this.y + Math.sin(this.heading + Math.PI) * pointLen);
     ctx.lineTo(this.x + Math.cos(this.heading - Math.PI / 2) * this.radius,
                this.y + Math.sin(this.heading - Math.PI / 2) * this.radius);
     ctx.fill();
