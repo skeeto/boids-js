@@ -168,7 +168,6 @@ Swarm.step = function (swarm) {
         swarm.boids[i].step(swarm);
         swarm.boids[i].draw(ctx);
     }
-    setTimeout(swarm.animate, 33);
 };
 
 /* Test */
@@ -176,7 +175,7 @@ Swarm.step = function (swarm) {
 var swarm; // defined globally for skewer
 $("document").ready(function() {
     swarm = new Swarm($('#canvas').get(0).getContext("2d"));
-    swarm.animate();
+    swarm.id = window.setInterval(swarm.animate, 33);
     swarm.clear();
     swarm.createBoid(200);
 });
