@@ -1,8 +1,8 @@
 /* Boid prototype */
 
-function Boid(ctx) {
-    this.x = Math.random() * ctx.canvas.width;
-    this.y = Math.random() * ctx.canvas.height;
+function Boid(swarm) {
+    this.x = Math.random() * swarm.width;
+    this.y = Math.random() * swarm.height;
     this.heading = Math.random() * 2 * Math.PI - Math.PI;
 }
 
@@ -27,16 +27,20 @@ Boid.prototype.draw = function(ctx) {
     ctx.fill();
 };
 
-Boid.prototype.distance = function(boid) {
-    return Math.sqrt((this.x - boid.x) * (this.x - boid.x) +
-                     (this.y - boid.y) * (this.y - boid.y));
+Boid.prototype.distance = function(boid, width, height) {
+    var x0 = Math.min(this.x, boid.x), x1 = Math.max(this.x, boid.x);
+    var y0 = Math.min(this.y, boid.y), y1 = Math.max(this.y, boid.y);
+    var dx = Math.min(x1 - x0, x0 + width - x1);
+    var dy = Math.min(y1 - y0, y0 + height - y1);
+    return Math.sqrt(dx * dx + dy * dy);
 };
 
 Boid.prototype.getNeighbors = function(swarm) {
+    var w = swarm.width, h = swarm.height;
     var neighbors = [];
     for (var i = 0; i < swarm.boids.length; i++) {
         var boid = swarm.boids[i];
-        if (this !== boid && this.distance(boid) < this.vision) {
+        if (this !== boid && this.distance(boid, w, h) < this.vision) {
             neighbors.push(boid);
         }
     }
@@ -73,6 +77,7 @@ Boid.meanAngle = function() {
 };
 
 Boid.prototype.step = function(swarm) {
+    var w = swarm.width, h = swarm.height;
     var neighbors = this.getNeighbors(swarm);
     if (neighbors.length > 0) {
         var meanhx = 0, meanhy = 0;
@@ -84,7 +89,7 @@ Boid.prototype.step = function(swarm) {
             meanhy += Math.sin(boid.heading);
             meanx += boid.x;
             meany += boid.y;
-            var dist = this.distance(boid);
+            var dist = this.distance(boid, w, h);
             if (dist < mindist) {
                 mindist = dist;
                 min = boid;
@@ -117,7 +122,7 @@ Boid.prototype.step = function(swarm) {
 
 Boid.prototype.move = function(swarm) {
     var padding = swarm.padding;
-    var width = swarm.ctx.canvas.width, height = swarm.ctx.canvas.height;
+    var width = swarm.width, height = swarm.height;
     this.x = Boid.wrap(this.x + Math.cos(this.heading) * this.speed,
                        -padding, width + padding * 2);
     this.y = Boid.wrap(this.y + Math.sin(this.heading) * this.speed,
@@ -138,7 +143,7 @@ function Swarm(ctx) {
 
 Swarm.prototype.createBoid = function(n) {
     for (var i = 0; i < (n || 1); i++) {
-        this.boids.push(new Boid(this.ctx));
+        this.boids.push(new Boid(this));
     }
 };
 
@@ -146,10 +151,18 @@ Swarm.prototype.clear = function() {
     this.boids = [];
 };
 
+Swarm.prototype.__defineGetter__("width", function() {
+    return this.ctx.canvas.width;
+});
+
+Swarm.prototype.__defineGetter__("height", function() {
+    return this.ctx.canvas.height;
+});
+
 Swarm.step = function (swarm) {
     var ctx = swarm.ctx;
     ctx.fillStyle = "white";
-    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    ctx.fillRect(0, 0, swarm.width, swarm.height);
 
     for (var i = 0; i < swarm.boids.length; i++) {
         swarm.boids[i].step(swarm);
