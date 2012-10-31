@@ -161,6 +161,10 @@ Swarm.prototype.__defineGetter__("height", function() {
 
 Swarm.step = function (swarm) {
     var ctx = swarm.ctx;
+    if (ctx.canvas.width != window.innerWidth)
+        ctx.canvas.width = window.innerWidth;
+    if (ctx.canvas.height != window.innerHeight)
+        ctx.canvas.height = window.innerHeight;
     ctx.fillStyle = "white";
     ctx.fillRect(0, 0, swarm.width, swarm.height);
 
@@ -176,6 +180,7 @@ var swarm; // defined globally for skewer
 $("document").ready(function() {
     swarm = new Swarm($('#canvas').get(0).getContext("2d"));
     swarm.id = window.setInterval(swarm.animate, 33);
+    swarm.animate();
     swarm.clear();
     swarm.createBoid(200);
 });
