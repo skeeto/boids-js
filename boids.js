@@ -63,7 +63,7 @@ Boid.wrap = function(value) {
     return value;
 };
 
-Boid.trim = function(value, limit) {
+Boid.clamp = function(value, limit) {
     return Math.min(limit, Math.max(-limit, value));
 };
 
@@ -113,7 +113,7 @@ Boid.prototype.step = function(swarm) {
 
         // Move in this direction
         var delta = Boid.wrap(target - this.heading, -Math.PI, Math.PI);
-        delta = Boid.trim(delta, this.radialSpeed);
+        delta = Boid.clamp(delta, this.radialSpeed);
         this.heading = Boid.wrap(this.heading + delta, -Math.PI, Math.PI);
     }
 
