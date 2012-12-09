@@ -13,7 +13,7 @@ Boid.prototype.vision = 50;
 
 Boid.prototype.draw = function(ctx) {
     var pointLen = this.radius * 2.5;
-    ctx.fillStyle = "blue";
+    ctx.fillStyle = 'blue';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
@@ -56,7 +56,7 @@ Boid.wrap = function(value) {
         min = arguments[1];
         max = arguments[2];
     } else {
-        throw new Error("wrong number of arguments");
+        throw new Error('wrong number of arguments');
     }
     while (value >= max) value -= (max - min);
     while (value < min) value += (max - min);
@@ -151,13 +151,13 @@ Swarm.prototype.clear = function() {
     this.boids = [];
 };
 
-Swarm.prototype.__defineGetter__("width", function() {
+Object.defineProperty(Swarm.prototype, 'width', {get: function() {
     return this.ctx.canvas.width;
-});
+}});
 
-Swarm.prototype.__defineGetter__("height", function() {
+Object.defineProperty(Swarm.prototype, 'height', {get: function() {
     return this.ctx.canvas.height;
-});
+}});
 
 Swarm.step = function (swarm) {
     var ctx = swarm.ctx;
@@ -165,7 +165,7 @@ Swarm.step = function (swarm) {
         ctx.canvas.width = window.innerWidth;
     if (ctx.canvas.height != window.innerHeight)
         ctx.canvas.height = window.innerHeight;
-    ctx.fillStyle = "white";
+    ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, swarm.width, swarm.height);
 
     for (var i = 0; i < swarm.boids.length; i++) {
@@ -177,9 +177,9 @@ Swarm.step = function (swarm) {
 /* Test */
 
 var swarm; // defined globally for skewer
-$("document").ready(function() {
-    swarm = new Swarm($('#canvas').get(0).getContext("2d"));
-    swarm.id = window.setInterval(swarm.animate, 33);
+$(document).ready(function() {
+    swarm = new Swarm($('#canvas').get(0).getContext('2d'));
+    swarm.id = setInterval(swarm.animate, 33);
     swarm.animate();
     swarm.clear();
     swarm.createBoid(200);
