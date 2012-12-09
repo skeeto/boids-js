@@ -151,13 +151,13 @@ Swarm.prototype.clear = function() {
     this.boids = [];
 };
 
-Swarm.prototype.__defineGetter__("width", function() {
+Object.defineProperty(Swarm.prototype, 'width', {get: function() {
     return this.ctx.canvas.width;
-});
+}});
 
-Swarm.prototype.__defineGetter__("height", function() {
+Object.defineProperty(Swarm.prototype, 'height', {get: function() {
     return this.ctx.canvas.height;
-});
+}});
 
 Swarm.step = function (swarm) {
     var ctx = swarm.ctx;
