@@ -139,6 +139,7 @@ Boid.prototype.move = function(swarm) {
 function Swarm(ctx) {
     this.ctx = ctx;
     this.boids = [];
+    this.entropy = null;
     var swarm = this;
     this.animate = function() {
         Swarm.step(swarm);
@@ -170,12 +171,21 @@ Swarm.step = function (swarm) {
         ctx.canvas.width = window.innerWidth;
     if (ctx.canvas.height != window.innerHeight)
         ctx.canvas.height = window.innerHeight;
+    if( (swarm.entropy === null ||
+        swarm.entropy.width !== swarm.width ||
+        swarm.entropy.height !== swarm.height) &&
+        swarm.boids.length > 0 ) {
+        swarm.entropy = new Entropy(swarm.boids,swarm.width,swarm.height);
+    }
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, swarm.width, swarm.height);
 
     for (var i = 0; i < swarm.boids.length; i++) {
         swarm.boids[i].step(swarm);
         swarm.boids[i].draw(ctx);
+    }
+    if( swarm.entropy !== null ) {
+        console.log(swarm.entropy.getEntropy());
     }
 };
 
@@ -187,5 +197,5 @@ $(document).ready(function() {
     swarm.id = setInterval(swarm.animate, 33);
     swarm.animate();
     swarm.clear();
-    swarm.createBoid(200);
+    swarm.createBoid(20);
 });
