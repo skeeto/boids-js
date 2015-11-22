@@ -1,6 +1,7 @@
 /* Boid prototype */
 
-function Boid(swarm) {
+function Boid(swarm, marked) {
+    this.marked = marked;
     this.x = Math.random() * swarm.width;
     this.y = Math.random() * swarm.height;
     this.heading = Math.random() * 2 * Math.PI - Math.PI;
@@ -13,7 +14,11 @@ Boid.prototype.vision = 50;
 
 Boid.prototype.draw = function(ctx) {
     var pointLen = this.radius * 2.5;
-    ctx.fillStyle = 'blue';
+    if( this.marked ) {
+        ctx.fillStyle = 'red';
+    } else {
+        ctx.fillStyle = 'blue';
+    }
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
@@ -143,7 +148,7 @@ function Swarm(ctx) {
 
 Swarm.prototype.createBoid = function(n) {
     for (var i = 0; i < (n || 1); i++) {
-        this.boids.push(new Boid(this));
+        this.boids.push(new Boid(this,i === 0));
     }
 };
 

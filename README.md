@@ -1,9 +1,5 @@
-# Boids in HTML5
+# Entropy of boids in HTML5
 
-This is intended as a demo for [Skewer][skewer].
+ * http://jataka.hu/rics/boids
 
-## Demo
-
- * http://nullprogram.com/boids-js/
-
-[skewer]: https://github.com/skeeto/skewer-mode
+based on http://nullprogram.com/boids-js/
