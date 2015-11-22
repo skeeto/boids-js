@@ -197,5 +197,5 @@ $(document).ready(function() {
     swarm.id = setInterval(swarm.animate, 33);
     swarm.animate();
     swarm.clear();
-    swarm.createBoid(20);
+    swarm.createBoid(200);
 });
