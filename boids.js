@@ -185,7 +185,7 @@ Swarm.step = function (swarm) {
         swarm.boids[i].draw(ctx);
     }
     if( swarm.entropy !== null ) {
-        console.log(swarm.entropy.getEntropy());
+        $("#entropy").text("Entropy: " + swarm.entropy.getEntropy().toFixed(2));
     }
 };
 

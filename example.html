@@ -2,13 +2,30 @@
 <html>
   <head>
     <title>Boids</title>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.8.2/jquery-ui.min.js"></script>
     <script src="entropy.js"></script>
     <script src="boids.js"></script>
   </head>
   <body style="background: darkgray; text-align: center;">
     <canvas id="canvas" width="640" height="640"
-            style="position: absolute; left: 0; top: 0;">
+            style="position: absolute; left: 0; top: 0; z-index:1;">
     </canvas>
+    <div id="accordion" style="position: absolute; right: 20%; z-index:2; width: 20%; opacity: 0.5; ">
+        <h3>Entropy</h3>
+        <div>
+            <p id="entropy" style="font-size:12px;">
+                Entropy:
+            </p>
+        </div>
+    </div>
+    <script>
+    $(function() {
+        $( "#accordion" ).accordion({
+            collapsible: true
+        });
+    });
+    </script>
   </body>
 </html>
