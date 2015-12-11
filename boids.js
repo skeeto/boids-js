@@ -1,7 +1,6 @@
 /* Boid prototype */
 
-function Boid(swarm, marked) {
-    this.marked = marked;
+function Boid(swarm) {
     this.x = Math.random() * swarm.width;
     this.y = Math.random() * swarm.height;
     this.heading = Math.random() * 2 * Math.PI - Math.PI;
@@ -14,11 +13,7 @@ Boid.prototype.vision = 50;
 
 Boid.prototype.draw = function(ctx) {
     var pointLen = this.radius * 2.5;
-    if( this.marked ) {
-        ctx.fillStyle = 'red';
-    } else {
-        ctx.fillStyle = 'blue';
-    }
+    ctx.fillStyle = 'blue';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
     ctx.fill();
@@ -136,8 +131,10 @@ Boid.prototype.move = function(swarm) {
 
 /* Swam prototype. */
 
-function Swarm(ctx) {
+function Swarm(ctx,plot_ctx,entropy_ctx) {
     this.ctx = ctx;
+    this.plot_ctx = plot_ctx;
+    this.entropy_ctx = entropy_ctx;
     this.boids = [];
     this.entropy = null;
     var swarm = this;
@@ -145,11 +142,12 @@ function Swarm(ctx) {
         Swarm.step(swarm);
     };
     this.padding = 8;
+    this.graphHandler = new GraphHandler(this);
 }
 
 Swarm.prototype.createBoid = function(n) {
     for (var i = 0; i < (n || 1); i++) {
-        this.boids.push(new Boid(this,i === 0));
+        this.boids.push(new Boid(this));
     }
 };
 
@@ -186,6 +184,7 @@ Swarm.step = function (swarm) {
     }
     if( swarm.entropy !== null ) {
         $("#entropy").text("Entropy: " + swarm.entropy.getEntropy().toFixed(2));
+        swarm.graphHandler.draw(swarm.entropy.getEntropy());
     }
 };
 
@@ -193,7 +192,10 @@ Swarm.step = function (swarm) {
 
 var swarm; // defined globally for skewer
 $(document).ready(function() {
-    swarm = new Swarm($('#canvas').get(0).getContext('2d'));
+    swarm = new Swarm(
+            $('#canvas').get(0).getContext('2d'),
+            $('#plot_canvas').get(0).getContext('2d'),
+            $('#entropy_canvas').get(0).getContext('2d'));
     swarm.id = setInterval(swarm.animate, 33);
     swarm.animate();
     swarm.clear();

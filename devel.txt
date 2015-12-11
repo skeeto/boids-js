@@ -4,3 +4,6 @@
 
 2015. 11. 28.
 - Entropy value appears in accordion.
+
+2015. 12. 11.
+- Showing entropy graph. Draw in every 10th step to avoid slowdown.

@@ -5,6 +5,9 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.8.2/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="entropy.css">
+    <script src="Graph.js"></script>
+    <script src="GraphHandler.js"></script>
     <script src="entropy.js"></script>
     <script src="boids.js"></script>
   </head>
@@ -12,18 +15,20 @@
     <canvas id="canvas" width="640" height="640"
             style="position: absolute; left: 0; top: 0; z-index:1;">
     </canvas>
-    <div id="accordion" style="position: absolute; right: 20%; z-index:2; width: 20%; opacity: 0.5; ">
-        <h3>Entropy</h3>
+    <div id="accordion">
+        <h3 id="entropy" title="Sum of distances among all boids.">Entropy:</h3>
         <div>
-            <p id="entropy" style="font-size:12px;">
-                Entropy:
-            </p>
+            <div id="entropy_canvases">
+                <canvas id="plot_canvas" width="600" height="600"></canvas>
+                <canvas id="entropy_canvas" width="600" height="600"></canvas>
+            </div>
         </div>
     </div>
     <script>
     $(function() {
         $( "#accordion" ).accordion({
-            collapsible: true
+            collapsible: true,
+            heightStyle: "content"
         });
     });
     </script>
