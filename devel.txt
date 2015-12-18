@@ -7,3 +7,6 @@
 
 2015. 12. 11.
 - Showing entropy graph. Draw in every 10th step to avoid slowdown.
+
+2015. 12. 18.
+- Adding missing files to git.

@@ -1,0 +1,27 @@
+#accordion {
+    position: absolute;
+    right: 5%;
+    z-index:2;
+    width: 30%;
+    opacity: 0.8;
+}
+.ui-accordion .ui-accordion-content {
+    padding: 0.5em;
+}
+#entropy_canvases {
+    position: relative;
+}
+
+#entropy_canvases canvas {
+    width: 100%;
+    height: auto;
+}
+
+#entropy_canvas {
+    z-index: 1;
+}
+
+#plot_canvas {
+    position: absolute;
+    z-index: 2;
+}
