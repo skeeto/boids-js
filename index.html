@@ -24,12 +24,24 @@
                 Based on <a href="https://github.com/skeeto/boids-js">boids</a>.
             </div>
         </div>
+        <h3 id="configuration" title="Simulation parameters.">Configuration</h3>
+        <div>
+            <div>
+                <label for="speed">Speed:</label>
+                <input type="text" id="speed" name="speed" value="2"><br />
+                <label for="radial_speed">Radial speed:</label>
+                <input type="text" id="radial_speed" name="radial_speed" title="value in Pi radian" value="1/60">
+                <label for="vision">Vision:</label>
+                <input type="text" id="vision" name="vision" value="50"><br />
+            </div>
+        </div>
     </div>
     <script>
     $(function() {
         $( "#accordion" ).accordion({
             collapsible: true,
-            heightStyle: "content"
+            heightStyle: "content",
+            icons: false
         });
     });
     </script>
