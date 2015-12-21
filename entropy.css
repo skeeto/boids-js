@@ -1,10 +1,14 @@
 #accordion {
     position: absolute;
-    right: 5%;
     z-index:2;
-    width: 30%;
     opacity: 0.8;
+    right: 5%;
+    width: 30%;
 }
+#help {
+    font-size: 50%;
+}
+
 .ui-accordion .ui-accordion-content {
     padding: 0.5em;
 }
