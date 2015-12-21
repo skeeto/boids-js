@@ -35,4 +35,4 @@ However there are certain configurations in which large flocks form. For example
 changing range of vision from 50 to 200 or
 radial distance from &Pi;/60 to 2*&Pi; would cause some kind of convergence.
 
-More projects at [jataka.hu/rics](<a href=")http://jataka.hu/rics).
+More projects at [jataka.hu/rics](http://jataka.hu/rics).
