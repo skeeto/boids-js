@@ -25,3 +25,13 @@
     position: absolute;
     z-index: 2;
 }
+
+fieldset {
+    min-width: 100px;
+    display: inline-block;
+    border-width: 0px;
+}
+
+fieldset input{
+    float: right;
+}

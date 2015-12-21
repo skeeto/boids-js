@@ -11,3 +11,6 @@
 2015. 12. 18.
 - Adding missing files to git.
 - Alterable configuration parameters (speed, radial speed, vision) in accordion.
+
+2015. 12. 21.
+- Better alignment of configuration fields.
