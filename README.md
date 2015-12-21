@@ -1,6 +1,8 @@
 Entropy of boids in HTML5
 ===========================
 
+![boids-entropy](http://jataka.hu/rics/boids/images/boids.png "Boids and entropy")
+
 Boids is
 a famous simulation of birds' flocking behavior by Craig Reynolds. Three basic rules
 (separation, aligment, and cohesion) generate a suprisingly complex
