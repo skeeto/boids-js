@@ -166,8 +166,9 @@ Object.defineProperty(Swarm.prototype, 'height', {get: function() {
 Swarm.step = function (swarm) {
     var speed = Number(document.getElementById("speed").value);
     Boid.prototype.speed = !isNaN(speed) ? speed : 2;
-    var radial_speed = Number(document.getElementById("radial_speed").value);
+    var radial_speed = parseFloat(document.getElementById("radial_speed").value);
     Boid.prototype.radialSpeed = !isNaN(radial_speed) ? radial_speed : Math.PI / 60;
+    //alert(radial_speed + ":" + isNaN(radial_speed) + ":" + Boid.prototype.radialSpeed);
     var vision = Number(document.getElementById("vision").value);
     Boid.prototype.vision = !isNaN(vision) ? vision : 50;
     var ctx = swarm.ctx;
