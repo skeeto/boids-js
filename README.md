@@ -14,9 +14,8 @@ I have completely reused his algorithm for boids simulation.
 However it is interesting to know whether birds are about to converge
 in the sense that they form a large flock after a certain amount of time.
 One possible way of checking this convergence is the usage of entropy.
-[Entropy](https://en.wikipedia.org/wiki/Entropy_%28order_and_disorder%29)
-- in general - measure the (dis)order of particles.
-Entropy - in this context - can be defined as the sum of average distance among birds.
+[Entropy](https://en.wikipedia.org/wiki/Entropy_%28order_and_disorder%29) \- in general \- measure the (dis)order of particles.
+Entropy \- in this context \- can be defined as the sum of average distance among birds.
 (There are several other possible definition, for example taking bird
     direction into account would be a natural extension.)
 
@@ -35,3 +34,5 @@ Entropy - in this context - can be defined as the sum of average distance among 
     However there are certain configurations in which large flocks form. For example
     changing range of vision from 50 to 200 or
     radial distance from &Pi;/60 to 2*&Pi; would cause some kind of convergence.
+
+    More projects at [jataka.hu/rics](<a href=")http://jataka.hu/rics).
