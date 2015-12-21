@@ -1,0 +1,41 @@
+#accordion {
+    position: absolute;
+    z-index:2;
+    opacity: 0.8;
+    right: 5%;
+    width: 30%;
+}
+#help {
+    font-size: 50%;
+}
+
+.ui-accordion .ui-accordion-content {
+    padding: 0.5em;
+}
+#entropy_canvases {
+    position: relative;
+}
+
+#entropy_canvases canvas {
+    width: 100%;
+    height: auto;
+}
+
+#entropy_canvas {
+    z-index: 1;
+}
+
+#plot_canvas {
+    position: absolute;
+    z-index: 2;
+}
+
+fieldset {
+    min-width: 100px;
+    display: inline-block;
+    border-width: 0px;
+}
+
+fieldset input{
+    float: right;
+}

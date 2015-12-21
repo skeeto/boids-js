@@ -1,0 +1,16 @@
+@import url("http://fonts.googleapis.com/css?family=Lato");
+body {
+    padding: 20px;
+    text-align: justify;
+    font-family: Lato;
+    margin: 20px;
+    background-color: lightblue;
+}
+a {
+    color: blue;
+    text-decoration: none;
+}
+#rics {
+    font-size: 80%;
+    font-style: italic;
+}

@@ -131,14 +131,18 @@ Boid.prototype.move = function(swarm) {
 
 /* Swam prototype. */
 
-function Swarm(ctx) {
+function Swarm(ctx,plot_ctx,entropy_ctx) {
     this.ctx = ctx;
+    this.plot_ctx = plot_ctx;
+    this.entropy_ctx = entropy_ctx;
     this.boids = [];
+    this.entropy = null;
     var swarm = this;
     this.animate = function() {
         Swarm.step(swarm);
     };
     this.padding = 8;
+    this.graphHandler = new GraphHandler(this);
 }
 
 Swarm.prototype.createBoid = function(n) {
@@ -160,11 +164,24 @@ Object.defineProperty(Swarm.prototype, 'height', {get: function() {
 }});
 
 Swarm.step = function (swarm) {
+    var speed = Number(document.getElementById("speed").value);
+    Boid.prototype.speed = !isNaN(speed) ? speed : 2;
+    var radial_speed = parseFloat(document.getElementById("radial_speed").value);
+    Boid.prototype.radialSpeed = !isNaN(radial_speed) ? radial_speed : Math.PI / 60;
+    //alert(radial_speed + ":" + isNaN(radial_speed) + ":" + Boid.prototype.radialSpeed);
+    var vision = Number(document.getElementById("vision").value);
+    Boid.prototype.vision = !isNaN(vision) ? vision : 50;
     var ctx = swarm.ctx;
     if (ctx.canvas.width != window.innerWidth)
         ctx.canvas.width = window.innerWidth;
     if (ctx.canvas.height != window.innerHeight)
         ctx.canvas.height = window.innerHeight;
+    if( (swarm.entropy === null ||
+        swarm.entropy.width !== swarm.width ||
+        swarm.entropy.height !== swarm.height) &&
+        swarm.boids.length > 0 ) {
+        swarm.entropy = new Entropy(swarm.boids,swarm.width,swarm.height);
+    }
     ctx.fillStyle = 'white';
     ctx.fillRect(0, 0, swarm.width, swarm.height);
 
@@ -172,13 +189,20 @@ Swarm.step = function (swarm) {
         swarm.boids[i].step(swarm);
         swarm.boids[i].draw(ctx);
     }
+    if( swarm.entropy !== null ) {
+        $("#entropy").text("Entropy: " + swarm.entropy.getEntropy().toFixed(2));
+        swarm.graphHandler.draw(swarm.entropy.getEntropy());
+    }
 };
 
 /* Test */
 
 var swarm; // defined globally for skewer
 $(document).ready(function() {
-    swarm = new Swarm($('#canvas').get(0).getContext('2d'));
+    swarm = new Swarm(
+            $('#canvas').get(0).getContext('2d'),
+            $('#plot_canvas').get(0).getContext('2d'),
+            $('#entropy_canvas').get(0).getContext('2d'));
     swarm.id = setInterval(swarm.animate, 33);
     swarm.animate();
     swarm.clear();

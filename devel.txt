@@ -1,0 +1,18 @@
+2015. 11. 22.
+- First modification.
+- Entropy calculation, appears on console.
+
+2015. 11. 28.
+- Entropy value appears in accordion.
+
+2015. 12. 11.
+- Showing entropy graph. Draw in every 10th step to avoid slowdown.
+
+2015. 12. 18.
+- Adding missing files to git.
+- Alterable configuration parameters (speed, radial speed, vision) in accordion.
+
+2015. 12. 21.
+- Better alignment of configuration fields.
+- Adding help.html.
+- More designing.
