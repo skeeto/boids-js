@@ -1,6 +1,0 @@
-2015. 11. 22.
-- First modification.
-- Entropy calculation, appears on console.
-
-2015. 11. 28.
-- Entropy value appears in accordion.
