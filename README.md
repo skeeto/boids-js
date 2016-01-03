@@ -10,4 +10,4 @@ This is intended as a demo for [Skewer][skewer].
 
 ## Branches
 
-An extension of the project calculating the [entropy](https://en.wikipedia.org/wiki/Entropy_%28order_and_disorder%29) or disorder of boids can be found [http://jataka.hu/rics/boids](http://jataka.hu/rics/boids). The github repository is [here](https://github.com/richardszabo/boids-js/tree/entropy).
+An extension of the project calculating the [entropy](https://en.wikipedia.org/wiki/Entropy_%28order_and_disorder%29) or disorder of boids can be found at [http://jataka.hu/rics/boids](http://jataka.hu/rics/boids). The github repository is [here](https://github.com/richardszabo/boids-js/tree/entropy).
