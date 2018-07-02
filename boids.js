@@ -177,8 +177,8 @@ Swarm.step = function (swarm) {
 /* Test */
 
 var swarm; // defined globally for skewer
-$(document).ready(function() {
-    swarm = new Swarm($('#canvas').get(0).getContext('2d'));
+document.addEventListener('DOMContentLoaded', function() {
+    swarm = new Swarm(document.getElementById('canvas').getContext('2d'));
     swarm.id = setInterval(swarm.animate, 33);
     swarm.animate();
     swarm.clear();
